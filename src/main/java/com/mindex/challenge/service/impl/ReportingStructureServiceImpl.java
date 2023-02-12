@@ -18,6 +18,7 @@ public class ReportingStructureServiceImpl implements ReportingStructureService 
     @Autowired
     private EmployeeRepository employeeRepository;
 
+    
     /** Obtains the employee with the given id, then creates a reporting structure for them. */
     @Override
     public ReportingStructure getEmployeeReportingStructure(String employeeId) {
@@ -33,7 +34,7 @@ public class ReportingStructureServiceImpl implements ReportingStructureService 
         return new ReportingStructure(employee, numberOfReports);
     }
 
-    /** Recursively counts number of reporting employees under the given employee. 
+    /** Recursively counts how many reporting employees are under the given employee. 
      * 
      * param 'employee': Employee for which to count their number of reporting employees
      *       'uniqueReports': Running list of all employees encountered when counting. Ensures no one is counted twice.
@@ -47,7 +48,8 @@ public class ReportingStructureServiceImpl implements ReportingStructureService 
         } else {
             int numReports = 0;
             for (Employee report : reports) {
-                // Get the full report using the employee controller.
+                // Get the full report using the employee repository because the employee objects in the direct reports
+                // list only contain employee ids. We need the list of this report's direct reports.
                 Employee fullReport = this.employeeRepository.findByEmployeeId(report.getEmployeeId());
                 // If an employee is in uniqueReports, they and their lower reports have been counted already, so we skip them.
                 if (!uniqueReports.contains(fullReport)) {
