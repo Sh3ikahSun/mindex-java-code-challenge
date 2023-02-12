@@ -31,7 +31,7 @@ public class CompensationServiceImpl implements CompensationService {
     public Compensation read(String employeeId) {
         LOG.debug("Reading compensation for employee with id [{}]", employeeId);
         //Compensation comp = compensationRepository.findByEmployeeId(employeeId);
-        Compensation comp = new Compensation(new Employee(), 0, new Date());
+        Compensation comp = new Compensation(new Employee(), 0, new Date());    // Placeholder
         // if (comp == null) {
         //     throw new RuntimeException("Could not find compensation for employee with id:" + employeeId);
         // }
